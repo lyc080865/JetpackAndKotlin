@@ -1,6 +1,8 @@
 package com.jetpack.kotlin.vm
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.util.*
 
 /**
  * @author  lyc
@@ -8,5 +10,11 @@ import androidx.lifecycle.ViewModel
  * @description:
  */
 class MainViewModel : ViewModel() {
+    val currentIndex: MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>()
+    }
 
+    fun onTabSelect(index :Int){
+
+    }
 }
