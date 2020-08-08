@@ -15,39 +15,43 @@ import com.jetpack.kotlin.fragment.UploadFailListFragment
 import com.jetpack.kotlin.vm.MainViewModel
 
 class MainActivity : BaseActivity() {
-    lateinit var mViewModel: MainViewModel
-    lateinit var mBinding: ActivityMainBinding
+    var mViewModel: MainViewModel? = null
+    var mBinding: ActivityMainBinding? = null
 
-    var defaultPage: Int = 0
-    lateinit var mShowingFragment: Fragment;
+    var defaultPage: Int = -1
+    var mShowingFragment: Fragment? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding =
-            DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-        mViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        mBinding.setVariable(BR.viewModel, mViewModel)
+
     }
 
     override fun initView() {
+        mBinding =
+            DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        mViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        mBinding!!.setVariable(BR.viewModel, mViewModel)
+
         initFragment(0)
 
         val indexObserver = Observer<Int> { index ->
             initFragment(index)
         }
+        mViewModel!!.currentIndex.observe(this, indexObserver)
     }
 
     /**
      * 初始化Fragment
      */
     private fun initFragment(page: Int) {
-        if (defaultPage == page) {
+        defaultPage = if (defaultPage == page) {
             return
+        } else {
+            page
         }
-        defaultPage = page
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         if (mShowingFragment != null) {
-            fragmentTransaction.hide(mShowingFragment)
+            fragmentTransaction.hide(mShowingFragment!!)
         }
         when (page) {
             1 -> {
@@ -57,7 +61,7 @@ class MainActivity : BaseActivity() {
                     mShowingFragment = NoReviewListFragment()
                     fragmentTransaction.add(
                         R.id.fl_content,
-                        mShowingFragment,
+                        mShowingFragment as NoReviewListFragment,
                         "NoReviewListFragment"
                     )
                 } else {
@@ -71,7 +75,7 @@ class MainActivity : BaseActivity() {
                     mShowingFragment = UploadFailListFragment()
                     fragmentTransaction.add(
                         R.id.fl_content,
-                        mShowingFragment,
+                        mShowingFragment as UploadFailListFragment,
                         "UploadFailListFragment"
                     )
                 } else {
@@ -85,7 +89,7 @@ class MainActivity : BaseActivity() {
                     mShowingFragment = ReviewedListFragment()
                     fragmentTransaction.add(
                         R.id.fl_content,
-                        mShowingFragment,
+                        mShowingFragment as ReviewedListFragment,
                         "ReviewedListFragment"
                     )
                 } else {
@@ -93,33 +97,33 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
-        fragmentTransaction.show(mShowingFragment)
+        fragmentTransaction.show(mShowingFragment!!)
         fragmentTransaction.commitAllowingStateLoss()
 
         setTabCheckText(page)
     }
 
     private fun setTabCheckText(page: Int) {
-        mBinding.llNoReview.setSelected(false)
-        mBinding.noReviewBtn.setSelected(false)
-        mBinding.tvNoReviewNum.setSelected(false)
-        mBinding.llUploadFail.setSelected(false)
-        mBinding.tvUploadFail.setSelected(false)
-        mBinding.tvUploadFailNum.setSelected(false)
-        mBinding.reviewedBtn.setSelected(false)
+        mBinding!!.llNoReview.isSelected = false
+        mBinding!!.noReviewBtn.isSelected = false
+        mBinding!!.tvNoReviewNum.isSelected = false
+        mBinding!!.llUploadFail.isSelected = false
+        mBinding!!.tvUploadFail.isSelected = false
+        mBinding!!.tvUploadFailNum.isSelected = false
+        mBinding!!.reviewedBtn.isSelected = false
         when (page) {
             0 -> {
-                mBinding.llNoReview.setSelected(true)
-                mBinding.noReviewBtn.setSelected(true)
-                mBinding.tvNoReviewNum.setSelected(true)
+                mBinding!!.llNoReview.isSelected = true
+                mBinding!!.noReviewBtn.isSelected = true
+                mBinding!!.tvNoReviewNum.isSelected = true
             }
             1 -> {
-                mBinding.llUploadFail.setSelected(true)
-                mBinding.tvUploadFail.setSelected(true)
-                mBinding.tvUploadFailNum.setSelected(true)
+                mBinding!!.llUploadFail.isSelected = true
+                mBinding!!.tvUploadFail.isSelected = true
+                mBinding!!.tvUploadFailNum.isSelected = true
             }
             2 -> {
-                mBinding.reviewedBtn.setSelected(true)
+                mBinding!!.reviewedBtn.isSelected = true
             }
         }
     }

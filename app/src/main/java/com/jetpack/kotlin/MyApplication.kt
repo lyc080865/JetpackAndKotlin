@@ -9,13 +9,25 @@ import android.content.Context
  * @description:
  */
 class MyApplication : Application() {
-
-    lateinit var mInstance: MyApplication
-    lateinit var mContext: Context
-
     override fun onCreate() {
         super.onCreate()
-        mContext = this
+        mContext = applicationContext
+    }
+
+    companion object {
+        private var mInstance: MyApplication? = null
+        var mContext: Context? = null
+            private set
+
+        @get:Synchronized
+        val instance: MyApplication?
+            get() {
+                if (null == mInstance) {
+                    mInstance = MyApplication()
+                }
+                return mInstance
+            }
+
     }
 
 

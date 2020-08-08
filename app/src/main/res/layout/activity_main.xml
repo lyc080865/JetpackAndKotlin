@@ -37,6 +37,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_main_tab_item"
                 android:gravity="center"
+                android:onClick="@{()->viewModel.onTabSelect(0)}"
                 android:orientation="horizontal">
 
                 <TextView
@@ -67,6 +68,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_main_tab_item"
                 android:gravity="center"
+                android:onClick="@{()->viewModel.onTabSelect(1)}"
                 android:orientation="horizontal">
 
                 <TextView
@@ -94,6 +96,7 @@
             <TextView
                 android:id="@+id/reviewed_btn"
                 android:layout_width="80dp"
+                android:onClick="@{()->viewModel.onTabSelect(2)}"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/bg_main_tab_item"

@@ -15,6 +15,6 @@ class MainViewModel : ViewModel() {
     }
 
     fun onTabSelect(index :Int){
-
+        currentIndex.value = index
     }
 }
