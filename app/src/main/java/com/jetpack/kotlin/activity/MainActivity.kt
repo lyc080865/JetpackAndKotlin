@@ -1,6 +1,8 @@
 package com.jetpack.kotlin.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -21,23 +23,27 @@ class MainActivity : BaseActivity() {
     var defaultPage: Int = -1
     var mShowingFragment: Fragment? = null;
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun initView() {
         mBinding =
             DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         mViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         mBinding!!.setVariable(BR.viewModel, mViewModel)
-
         initFragment(0)
 
         val indexObserver = Observer<Int> { index ->
             initFragment(index)
         }
         mViewModel!!.currentIndex.observe(this, indexObserver)
+
+        mBinding!!.loginImg.setOnClickListener {
+            goToLogin()
+        }
+
+    }
+
+    private fun goToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     /**

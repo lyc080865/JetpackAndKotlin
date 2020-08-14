@@ -14,10 +14,10 @@ open abstract class BaseActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         initView();
 
-        //设置默认的statue bar 颜色
-        BarUtil.subtractMarginTopEqualStatusBarHeight(this.window.decorView)
-        BarUtil.setStatusBarAlpha(this, 0, false)
-        BarUtil.setStatusBarLightMode(this, true)
+//        //设置默认的statue bar 颜色
+//        BarUtil.subtractMarginTopEqualStatusBarHeight(this.window.decorView)
+//        BarUtil.setStatusBarAlpha(this, 0, false)
+//        BarUtil.setStatusBarLightMode(this, true)
     }
 
     abstract fun initView();
