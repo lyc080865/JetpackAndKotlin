@@ -2,6 +2,7 @@ package com.jetpack.kotlin
 
 import android.app.Application
 import android.content.Context
+import com.jetpack.kotlin.utils.DataStoreUtils
 
 /**
  * @author  lyc
@@ -12,6 +13,7 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         mContext = applicationContext
+        DataStoreUtils.init(this)
     }
 
     companion object {

@@ -17,7 +17,8 @@ class HttpManager {
             return OkHttpClient.Builder()
                 .readTimeout(60000, TimeUnit.MILLISECONDS)
                 .connectTimeout(60000, TimeUnit.MILLISECONDS)
-                .addInterceptor(LoggingInterceptor())
+                .addInterceptor(HttpHeaderInterceptor())
+//                .addInterceptor(LoggingInterceptor())
                 .build()
         }
 
